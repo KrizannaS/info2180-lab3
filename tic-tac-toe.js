@@ -8,10 +8,8 @@ var xturn=true;
 var status=document.getElementById('status');
 var button=document.querySelector(".btn");
 let squares = document.querySelectorAll('#board div'),total=0;
-let Initial=status.innerHTML;
 let gameView= Array(9).fill(0);
 var gameOver=false;
-
 
 
 
@@ -19,37 +17,49 @@ for(let i=0; i<squares.length;i++) {
 squares[i].classList.add('square');
 
 
-squares[i].addEventListener('click',function(){
-console.log(this);
-console.log(squares[i]);
+squares[i].onclick=function(){
 
-   
+
+    //Disallow User from making changes
+
+    if(this.innerHTML != "") return;
+
 
     ///Adding X or O to sqaure when clicked
 
+
         if(this.innerHTML !== "X" && this.innerHTML !== "O"){
                     if(total%2 === 0){
-                       console.log(total);
-                       this.innerHTML = "X"  ;
+                       this.innerHTML ="X" ;
                        status.innerHTML=' Player O Turn';
                        this.innerHTML ="<span class='square X'> X </span>";
+                       total++;
 
-                        total++;
+
                    
                     }else
+
                     {
                         console.log(total);
                        this.innerHTML = "O";
+                       status.innerHTML=' Player X Turn';
                        this.innerHTML  ="<span class='square O'> O</span>";
                        total++;
-                     
+                       onclick='';
                      
                        
                     }
-       
+     
+     
                     getWinner();
 
-  }});
+     
+ }}
+
+   
+
+
+
 
  //Change style when move over mouse
 
@@ -128,13 +138,7 @@ function getWinner(){
 function selectWinner(a,b,c){
 
  status.innerHTML=  "Congratulations" + a.innerHTML + "is the Winner";
-
- 
-
-
-
-
-
+ document.getElementById("status").classList.add("you-won")
 
 
 }  
@@ -143,7 +147,11 @@ function selectWinner(a,b,c){
 
 //Restart the game
 
+let Initial=status.innerHTML;
+
 button.addEventListener("click",()=>{
+
+  document.getElementById("status").classList.remove("you-won")
 
   squares.forEach((e)=>{
 
@@ -167,3 +175,6 @@ button.addEventListener("click",()=>{
 
 
 }
+
+
+
